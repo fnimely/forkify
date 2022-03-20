@@ -580,6 +580,17 @@ acc1.deposit(300).deposit(500).withdraw(35);*/
 // AJAX call: XMLHTTPREQUEST
 
 /*
+---------------- Forkify ----------
+EVENT HANDLERS IN MVC: PUBLISHER-SUBSCRIBER(p-s) PATTERN - design patterns are standard
+solution to certain kinds of problems. In p-s, the publisher is some code that knows
+when to react, and the subscriber is code that wants to react, the code that should
+be exuecuted when the event happens. The pusblisher does not know that the subscriber
+exist. 
+
+HELPERS AND CONFIGURATION FILES - many real world app have two module modules that
+are independent of the rest of the project architecture and they are project config
+and help functions module.
+
 THE MVC ARCHITECTURE
 Our project must follow a certain architecture for easy maintainance, expansions, and
 structure.
@@ -613,7 +624,7 @@ know nothing of each other. MVC mainly separates business from application logic
 controller is a sort of bridge between the two. It dispaches tasks to the model and
 the view. Only the controller imports and calls functions from the model and the view.
 
-VIEW - renders data to the UI.
+VIEW - renders data to the UI. Handles everything related to the DOM or the view.
 
 There are different ways of implementing the MVC pattern.
 
