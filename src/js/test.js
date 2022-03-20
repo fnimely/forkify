@@ -580,8 +580,45 @@ acc1.deposit(300).deposit(500).withdraw(35);*/
 // AJAX call: XMLHTTPREQUEST
 
 /*
+THE MVC ARCHITECTURE
+Our project must follow a certain architecture for easy maintainance, expansions, and
+structure.
+There are some frameworks that take care of architecture but we can also create one
+manually. 
+Components of Architecture
+BUSINESS - code that solves the business problem. If your business is whatsapp, your
+businsess is sending messages. The logic related to solve the problem that the
+business was set out to do.
 
-// ------------- 16 Async JS -----------
+STATE - stores the data needed for the application. It should be the 'single source of
+truth' so if something changes in the state, it should be reflected in the UI and vice
+versa. Storing, display, and keeping data in sync is one of the most difficult task.
+
+HTTP LIBRARY - responsible for making and receiving fetch requests.
+
+APPLICATION LOGIC (ROUTER) - concern about the implementation of the application that
+is not directly related to the business logic. It is the technical aspect, including
+hanling of UI events and page navigation. It maps action to the user navigation.
+
+PRESENTATION LOGIC (UI LAYER) - visible part of the application, responsible for
+displaying the app state on the UI.
+
+Any good architecture have a way for separating all these components like the MVC.
+
+Model - the application data. Usually contains the state and the business logic. It
+also contains HTTP library.
+
+Controller - contains the app logic. Sits between the model and the view which should
+know nothing of each other. MVC mainly separates business from application logic. The 
+controller is a sort of bridge between the two. It dispaches tasks to the model and
+the view. Only the controller imports and calls functions from the model and the view.
+
+VIEW - renders data to the UI.
+
+There are different ways of implementing the MVC pattern.
+
+
+//------------- 16 Async JS -----------
 Synch code is executed as the appear in the code line-by-line. If there is an
 that is long running, it blocks execution of other code after it.
 ASYNC code are non-blocking because the rest of the code keeps running will the asyn
