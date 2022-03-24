@@ -12,6 +12,44 @@ export default class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markUp);
   }
 
+  // only change markup when there's a difference btw old(current) markup
+  update(data) {
+    this._data = data;
+    const newMarkUp = this._generateMarkup();
+
+    // convert markup string to DOM object living in memory
+    // use obj to comare to actual DOM on the page
+    const newDOM = document.createRange().createContextualFragment(newMarkUp); // convert string to DOM(virtual) obj
+    const newElements = Array.from(newDOM.querySelectorAll('*'));
+    const curElements = Array.from(this._parentElement.querySelectorAll('*'));
+    // console.log(newElements);
+    // console.log(curElements);
+
+    newElements.forEach((newEl, i) => {
+      const curEl = curElements[i];
+      // console.log(curEl, newEl.isEqualNode(curEl));
+
+      // change text content of curEl to newEl is they are not the same
+      // update the DOM only in places they have changed
+      if (
+        !newEl.isEqualNode(curEl) &&
+        newEl.firstChild?.nodeValue.trim() !== ''
+      ) {
+        // console.log(newEl.firstChild?.nodeValue.trim());
+        curEl.textContent = newEl.textContent;
+        // console.log(curEl.textContent);
+      }
+
+      // update changed attribute
+      if (!newEl.isEqualNode(curEl)) {
+        Array.from(newEl.attributes).forEach(attr =>
+          curEl.setAttribute(attr.name, attr.value)
+        );
+        console.log(newEl.attributes);
+      }
+    });
+  }
+
   _clear() {
     this._parentElement.innerHTML = '';
   }

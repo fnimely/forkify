@@ -581,6 +581,11 @@ acc1.deposit(300).deposit(500).withdraw(35);*/
 
 /*
 ---------------- Forkify ----------
+DEVELOPING A DOM UPDATING ALGO - The firstChild property of a selected element is the 
+text of that element. When we change an element, we want to change the attribute as
+well. NodeValue is used to set or return the content of the specified node but returns
+null for certain node types.
+
 EVENT HANDLERS IN MVC: PUBLISHER-SUBSCRIBER(p-s) PATTERN - design patterns are standard
 solution to certain kinds of problems. In p-s, the publisher is some code that knows
 when to react, and the subscriber is code that wants to react, the code that should
