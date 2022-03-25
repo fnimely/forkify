@@ -9,6 +9,7 @@ import AddRecipeView from './views/addRecipeView';
 
 import 'core-js/stable'; // polyfil all else
 import 'regenerator-runtime/runtime'; // polyfil async await
+import addRecipeView from './views/addRecipeView';
 
 // if (module.hot) {
 //   module.hot.accept();
@@ -103,6 +104,12 @@ const controllBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controllAddRecipe = function (newRecipe) {
+  console.log(newRecipe);
+
+  // upload new recipe data
+};
+
 // follows the p-s pattern
 const init = function () {
   bookmarksView.addHandlerRender(controllBookmarks);
@@ -111,5 +118,6 @@ const init = function () {
   recipeView.addHandlerAddBookmark(controllAddBookmark);
   searchView.addHandlerSearch(controllSearchResults);
   paginationView.addHandlerClick(controllPagination);
+  addRecipeView._addHandlerUpload(controllAddRecipe);
 };
 init();
