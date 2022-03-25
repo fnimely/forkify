@@ -83,6 +83,7 @@ export const updateServings = function (newServings) {
 
 const persistBookmarks = function () {
   localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
+  localStorage.setItem('test', 'my test');
 };
 
 export const addBookmark = function (recipe) {
@@ -107,8 +108,13 @@ export const deleteBookmark = function (id) {
 };
 
 const init = function () {
-  const storage = localStorage.getItem('bookmakrs');
+  const storage = localStorage.getItem('bookmarks');
   if (storage) state.bookmarks = JSON.parse(storage); // JSON.parse convert a string to obj
 };
 init();
-console.log(state.bookmarks);
+// console.log(state.bookmarks);
+
+const clearBookmarks = function () {
+  localStorage.clear('bookmarks');
+};
+// clearBookmarks();
