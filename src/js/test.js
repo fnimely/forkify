@@ -581,6 +581,8 @@ acc1.deposit(300).deposit(500).withdraw(35);*/
 
 /*
 ---------------- Forkify ----------
+IMPLEMENTING BOOKMARKS - a common pattern for adding and removing data is that we 
+add, we get the entire data and when we want to delete, we get the id.
 DEVELOPING A DOM UPDATING ALGO - The firstChild property of a selected element is the 
 text of that element. When we change an element, we want to change the attribute as
 well. NodeValue is used to set or return the content of the specified node but returns

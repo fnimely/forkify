@@ -3,11 +3,15 @@ import icons from 'url:../../img/icons.svg';
 export default class View {
   _data;
 
-  render(data) {
+  render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
+
     this._data = data;
     const markUp = this._generateMarkup();
+
+    if (!render) return markUp;
+
     this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', markUp);
   }
@@ -45,7 +49,7 @@ export default class View {
         Array.from(newEl.attributes).forEach(attr =>
           curEl.setAttribute(attr.name, attr.value)
         );
-        console.log(newEl.attributes);
+        // console.log(newEl.attributes);
       }
     });
   }

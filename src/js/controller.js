@@ -4,6 +4,7 @@ import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
+import bookmarksView from './views/bookmarksView.js';
 
 import 'core-js/stable'; // polyfil all else
 import 'regenerator-runtime/runtime'; // polyfil async await
@@ -22,6 +23,7 @@ const controlRecipes = async function () {
 
     // update resulta view to mark selected search result
     resultsView.update(model.getSearchResultsPage());
+    bookmarksView.update(model.state.bookmarks);
 
     //  loading recipe
     await model.loadRecipe(id);
@@ -78,8 +80,19 @@ const controlServings = function (newServings) {
 };
 
 const controllAddBookmark = function () {
-  model.addBookmark(model.state.recipe);
-  console.log(model.state.recipe);
+  // add or remove bookmark if it is or isn't already bookmared
+  if (!model.state.recipe.bookmarked) {
+    model.addBookmark(model.state.recipe);
+  } else {
+    model.deleteBookmark(model.state.recipe.id);
+  }
+  // console.log(model.state.recipe.bookmarked);
+
+  // update recipe view
+  recipeView.update(model.state.recipe);
+
+  // render bookmarks
+  bookmarksView.render(model.state.bookmarks);
 };
 
 // follows the p-s pattern

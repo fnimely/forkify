@@ -2,9 +2,9 @@ import View from './View.js';
 import previewView from './previewView.js';
 import icons from 'url:../../img/icons.svg';
 
-class ResultsViewv extends View {
-  _parentElement = document.querySelector('.results');
-  _errorMsg = `No recipe found from search, please try again.`;
+class BookmarksView extends View {
+  _parentElement = document.querySelector('.bookmarks__list');
+  _errorMsg = `No bookmarks yet.`;
   _msg = '';
 
   _generateMarkup() {
@@ -15,4 +15,4 @@ class ResultsViewv extends View {
   }
 }
 
-export default new ResultsViewv();
+export default new BookmarksView();
