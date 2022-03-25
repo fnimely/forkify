@@ -1,5 +1,6 @@
 'user strict';
 import * as model from './model.js';
+import { MODAL_CLOSE_SEC } from './config.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
@@ -10,6 +11,7 @@ import AddRecipeView from './views/addRecipeView';
 import 'core-js/stable'; // polyfil all else
 import 'regenerator-runtime/runtime'; // polyfil async await
 import addRecipeView from './views/addRecipeView';
+import { async } from 'regenerator-runtime/runtime';
 
 // if (module.hot) {
 //   module.hot.accept();
@@ -104,8 +106,30 @@ const controllBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
-const controllAddRecipe = function (newRecipe) {
-  console.log(newRecipe);
+const controllAddRecipe = async function (newRecipe) {
+  try {
+    // show loading spinner
+    addRecipeView.renderSpinner();
+
+    // upload new recipe data
+    await model.uploadRecipe(newRecipe);
+    console.log(model.state.recipe);
+
+    // render recipe
+    recipeView.render(model.state.recipe);
+
+    // success message
+    addRecipeView.renderMsg();
+
+    // close form window
+    setTimeout(function () {
+      addRecipeView.toggleWindow();
+    }, MODAL_CLOSE_SEC * 1000);
+  } catch (err) {
+    console.log(err);
+    addRecipeView.renderError(err.message);
+  }
+  // console.log(newRecipe);
 
   // upload new recipe data
 };
