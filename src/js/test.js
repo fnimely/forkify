@@ -580,6 +580,13 @@ acc1.deposit(300).deposit(500).withdraw(35);*/
 // AJAX call: XMLHTTPREQUEST
 
 /*
+-------------GIT------------------
+Go back in time to the previous commit - git reset --hard HEAD
+Shows previous commit info - git log
+Go to a previous specified commit - git reset --hard <commit key>
+List branched - git branch
+Parallel track to write new code without changing the original - git branch <branch name>
+
 ---------------- Forkify ----------
 IMPLEMENTING BOOKMARKS - a common pattern for adding and removing data is that we 
 add, we get the entire data and when we want to delete, we get the id.

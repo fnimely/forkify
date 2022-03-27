@@ -3,6 +3,19 @@ import icons from 'url:../../img/icons.svg';
 export default class View {
   _data;
 
+  /**
+   *
+   * @param {Object | Object[]} data The data to be rendered (e.g. recipe)
+   * @param {boolean} [render=true] if false, create markup string instead of rendering to the DOM
+   * @returns {undefined | string} a markup string is returend if render=false
+   * @this {Object} View instance
+   * @author
+   * @todo Finish the implementation display number of pages between two pagination
+   * ability for user to sort search result by duration or num of ingredients
+   * Perform ingrededient validation in view before submitting form
+   * Features - shopping list, weekly meal planning feature, get nutrition data for
+   * each ingredient from spoonaculart ingredient
+   */
   render(data, render = true) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
