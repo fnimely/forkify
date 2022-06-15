@@ -2610,6 +2610,7 @@ parcelHelpers.defineInteropFlag(exports);
 var _iconsSvg = require("url:../../img/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 var _fractional = require("fractional");
+var _fractionalDefault = parcelHelpers.interopDefault(_fractional);
 var _helpersJs = require("../helpers.js");
 var _viewJs = require("./View.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
@@ -2725,7 +2726,7 @@ class RecipeView extends _viewJsDefault.default {
         <svg class="recipe__icon">
           <use href="${_iconsSvgDefault.default}#icon-check"></use>
         </svg>
-        <div class="recipe__quantity">${new _fractional.Fraction(ing.quantity).toString() ?? ''}</div>
+        <div class="recipe__quantity">${new _fractionalDefault.default(ing.quantity).toString() ?? ''}</div>
         <div class="recipe__description">
           <span class="recipe__unit">${ing.unit}</span>
           ${ing.description}
