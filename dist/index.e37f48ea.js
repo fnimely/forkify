@@ -2698,7 +2698,7 @@ class RecipeView extends _viewJsDefault.default {
         <svg class="recipe__icon">
           <use href="${_iconsSvgDefault.default}#icon-check"></use>
         </svg>
-        <div class="recipe__quantity">${ing.quantity.toString() ?? ''}</div>
+        <div class="recipe__quantity">${ing.quantity ?? ''}</div>
         <div class="recipe__description">
           <span class="recipe__unit">${ing.unit}</span>
           ${ing.description}
