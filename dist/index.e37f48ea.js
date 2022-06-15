@@ -2506,8 +2506,6 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "AJAX", ()=>AJAX
 );
-parcelHelpers.export(exports, "numberToFraction", ()=>numberToFraction
-);
 var _regeneratorRuntime = require("regenerator-runtime");
 var _configJs = require("./config.js");
 // contains functions that are reused
@@ -2540,31 +2538,6 @@ const AJAX = async function(url, uploadData) {
     } catch (err) {
         throw err; // propagate the err to model.js by rethrowing it
     }
-};
-const numberToFraction = function(amount) {
-    // This is a whole number and doesn't need modification.
-    if (parseFloat(amount) === parseInt(amount)) return amount;
-    // Next 12 lines are cribbed from https://stackoverflow.com/a/23575406.
-    const gcd = function(a, b) {
-        if (b < 0.0000001) return a;
-        return gcd(b, Math.floor(a % b));
-    };
-    const len = amount.toString().length - 2;
-    let denominator = Math.pow(10, len);
-    let numerator = amount * denominator;
-    var divisor = gcd(numerator, denominator);
-    numerator /= divisor;
-    denominator /= divisor;
-    let base = 0;
-    // In a scenario like 3/2, convert to 1 1/2
-    // by pulling out the base number and reducing the numerator.
-    if (numerator > denominator) {
-        base = Math.floor(numerator / denominator);
-        numerator -= base * denominator;
-    }
-    amount = Math.floor(numerator) + '/' + Math.floor(denominator);
-    if (base) amount = base + ' ' + amount;
-    return amount;
 }; /*
 export const getJSON = async function (url) {
   try {
@@ -2609,7 +2582,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _iconsSvg = require("url:../../img/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
-var _helpersJs = require("../helpers.js");
+// import { numberToFraction } from '../helpers.js';
 var _viewJs = require("./View.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
 const Fraction = require('fractional').Fraction;
@@ -2736,7 +2709,7 @@ class RecipeView extends _viewJsDefault.default {
 }
 exports.default = new RecipeView();
 
-},{"url:../../img/icons.svg":"loVOp","../helpers.js":"hGI1E","./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","fractional":"3SU56"}],"loVOp":[function(require,module,exports) {
+},{"url:../../img/icons.svg":"loVOp","./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","fractional":"3SU56"}],"loVOp":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('hWUTQ') + "icons.dfd7a6db.svg" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
