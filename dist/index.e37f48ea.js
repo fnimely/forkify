@@ -2609,11 +2609,10 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _iconsSvg = require("url:../../img/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
-var _fractional = require("fractional");
-var _fractionalDefault = parcelHelpers.interopDefault(_fractional);
 var _helpersJs = require("../helpers.js");
 var _viewJs = require("./View.js");
 var _viewJsDefault = parcelHelpers.interopDefault(_viewJs);
+const Fraction = require('fractional').Fraction;
 class RecipeView extends _viewJsDefault.default {
     _parentElement = document.querySelector('.recipe');
     _errorMsg = `Could not find recipe. Please try another.`;
@@ -2726,7 +2725,7 @@ class RecipeView extends _viewJsDefault.default {
         <svg class="recipe__icon">
           <use href="${_iconsSvgDefault.default}#icon-check"></use>
         </svg>
-        <div class="recipe__quantity">${new _fractionalDefault.default(ing.quantity).toString() ?? ''}</div>
+        <div class="recipe__quantity">${new Fraction(ing.quantity).toString() ?? ''}</div>
         <div class="recipe__description">
           <span class="recipe__unit">${ing.unit}</span>
           ${ing.description}
@@ -2737,7 +2736,7 @@ class RecipeView extends _viewJsDefault.default {
 }
 exports.default = new RecipeView();
 
-},{"url:../../img/icons.svg":"loVOp","fractional":"3SU56","../helpers.js":"hGI1E","./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"loVOp":[function(require,module,exports) {
+},{"url:../../img/icons.svg":"loVOp","../helpers.js":"hGI1E","./View.js":"5cUXS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","fractional":"3SU56"}],"loVOp":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('hWUTQ') + "icons.dfd7a6db.svg" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -2775,7 +2774,103 @@ exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
 exports.getOrigin = getOrigin;
 
-},{}],"3SU56":[function(require,module,exports) {
+},{}],"5cUXS":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _iconsSvg = require("url:../../img/icons.svg");
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
+var _helpers = require("../helpers");
+class View {
+    _data;
+    /**
+   *
+   * @param {Object | Object[]} data The data to be rendered (e.g. recipe)
+   * @param {boolean} [render=true] if false, create markup string instead of rendering to the DOM
+   * @returns {undefined | string} a markup string is returend if render=false
+   * @this {Object} View instance
+   * @author
+   * @todo Finish the implementation display number of pages between two pagination
+   * ability for user to sort search result by duration or num of ingredients
+   * Perform ingrededient validation in view before submitting form
+   * Features - shopping list, weekly meal planning feature, get nutrition data for
+   * each ingredient from spoonaculart ingredient
+   */ render(data, render = true) {
+        if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
+        this._data = data;
+        const markUp = this._generateMarkup();
+        if (!render) return markUp;
+        this._clear();
+        this._parentElement.insertAdjacentHTML('afterbegin', markUp);
+    }
+    // only change markup when there's a difference btw old(current) markup
+    update(data) {
+        this._data = data;
+        const newMarkUp = this._generateMarkup();
+        // convert markup string to DOM object living in memory
+        // use obj to comare to actual DOM on the page
+        const newDOM = document.createRange().createContextualFragment(newMarkUp); // convert string to DOM(virtual) obj
+        const newElements = Array.from(newDOM.querySelectorAll('*'));
+        const curElements = Array.from(this._parentElement.querySelectorAll('*'));
+        // console.log(newElements);
+        // console.log(curElements);
+        newElements.forEach((newEl, i)=>{
+            const curEl = curElements[i];
+            // console.log(curEl, newEl.isEqualNode(curEl));
+            // change text content of curEl to newEl is they are not the same
+            // update the DOM only in places they have changed
+            if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== '') // console.log(newEl.firstChild?.nodeValue.trim());
+            curEl.textContent = newEl.textContent;
+            // update changed attribute
+            if (!newEl.isEqualNode(curEl)) Array.from(newEl.attributes).forEach((attr)=>curEl.setAttribute(attr.name, attr.value)
+            );
+        });
+    }
+    _clear() {
+        this._parentElement.innerHTML = '';
+    }
+    renderSpinner() {
+        const markUp = `
+          <div class="spinner">
+            <svg>
+              <use href="${_iconsSvgDefault.default}#icon-loader"></use>
+            </svg>
+          </div>
+        `;
+        this._clear();
+        this._parentElement.insertAdjacentHTML('afterbegin', markUp);
+    }
+    renderError(message = this._errorMsg) {
+        const markUp = `
+        <div class="error">
+        <div>
+            <svg>
+            <use href="${_iconsSvgDefault.default}#icon-alert-triangle"></use>
+            </svg>
+        </div>
+        <p>${message}</p>
+        </div>
+      `;
+        this._clear();
+        this._parentElement.insertAdjacentHTML('afterbegin', markUp);
+    }
+    renderMsg(message = this._msg) {
+        const markUp = `
+        <div class="message">
+        <div>
+            <svg>
+            <use href="${_iconsSvgDefault.default}#icon-smile-triangle"></use>
+            </svg>
+        </div>
+        <p>${message}</p>
+        </div>
+      `;
+        this._clear();
+        this._parentElement.insertAdjacentHTML('afterbegin', markUp);
+    }
+}
+exports.default = View;
+
+},{"url:../../img/icons.svg":"loVOp","../helpers":"hGI1E","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3SU56":[function(require,module,exports) {
 /*
 fraction.js
 A Javascript fraction library.
@@ -3028,103 +3123,7 @@ Fraction.primeFactors = function(n) {
 };
 module.exports.Fraction = Fraction;
 
-},{}],"5cUXS":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _iconsSvg = require("url:../../img/icons.svg");
-var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
-var _helpers = require("../helpers");
-class View {
-    _data;
-    /**
-   *
-   * @param {Object | Object[]} data The data to be rendered (e.g. recipe)
-   * @param {boolean} [render=true] if false, create markup string instead of rendering to the DOM
-   * @returns {undefined | string} a markup string is returend if render=false
-   * @this {Object} View instance
-   * @author
-   * @todo Finish the implementation display number of pages between two pagination
-   * ability for user to sort search result by duration or num of ingredients
-   * Perform ingrededient validation in view before submitting form
-   * Features - shopping list, weekly meal planning feature, get nutrition data for
-   * each ingredient from spoonaculart ingredient
-   */ render(data, render = true) {
-        if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
-        this._data = data;
-        const markUp = this._generateMarkup();
-        if (!render) return markUp;
-        this._clear();
-        this._parentElement.insertAdjacentHTML('afterbegin', markUp);
-    }
-    // only change markup when there's a difference btw old(current) markup
-    update(data) {
-        this._data = data;
-        const newMarkUp = this._generateMarkup();
-        // convert markup string to DOM object living in memory
-        // use obj to comare to actual DOM on the page
-        const newDOM = document.createRange().createContextualFragment(newMarkUp); // convert string to DOM(virtual) obj
-        const newElements = Array.from(newDOM.querySelectorAll('*'));
-        const curElements = Array.from(this._parentElement.querySelectorAll('*'));
-        // console.log(newElements);
-        // console.log(curElements);
-        newElements.forEach((newEl, i)=>{
-            const curEl = curElements[i];
-            // console.log(curEl, newEl.isEqualNode(curEl));
-            // change text content of curEl to newEl is they are not the same
-            // update the DOM only in places they have changed
-            if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== '') // console.log(newEl.firstChild?.nodeValue.trim());
-            curEl.textContent = newEl.textContent;
-            // update changed attribute
-            if (!newEl.isEqualNode(curEl)) Array.from(newEl.attributes).forEach((attr)=>curEl.setAttribute(attr.name, attr.value)
-            );
-        });
-    }
-    _clear() {
-        this._parentElement.innerHTML = '';
-    }
-    renderSpinner() {
-        const markUp = `
-          <div class="spinner">
-            <svg>
-              <use href="${_iconsSvgDefault.default}#icon-loader"></use>
-            </svg>
-          </div>
-        `;
-        this._clear();
-        this._parentElement.insertAdjacentHTML('afterbegin', markUp);
-    }
-    renderError(message = this._errorMsg) {
-        const markUp = `
-        <div class="error">
-        <div>
-            <svg>
-            <use href="${_iconsSvgDefault.default}#icon-alert-triangle"></use>
-            </svg>
-        </div>
-        <p>${message}</p>
-        </div>
-      `;
-        this._clear();
-        this._parentElement.insertAdjacentHTML('afterbegin', markUp);
-    }
-    renderMsg(message = this._msg) {
-        const markUp = `
-        <div class="message">
-        <div>
-            <svg>
-            <use href="${_iconsSvgDefault.default}#icon-smile-triangle"></use>
-            </svg>
-        </div>
-        <p>${message}</p>
-        </div>
-      `;
-        this._clear();
-        this._parentElement.insertAdjacentHTML('afterbegin', markUp);
-    }
-}
-exports.default = View;
-
-},{"url:../../img/icons.svg":"loVOp","../helpers":"hGI1E","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9OQAM":[function(require,module,exports) {
+},{}],"9OQAM":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 class SearchView {
