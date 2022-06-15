@@ -1,5 +1,5 @@
 import icons from 'url:../../img/icons.svg';
-import { numberToFraction } from '../helpers';
+// import { numberToFraction } from '../helpers';
 
 export default class View {
   _data;
